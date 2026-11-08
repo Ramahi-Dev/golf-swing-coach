@@ -92,7 +92,81 @@
               <input id="fileInput" type="file" accept="video/*" hidden />
             </label>
           </div>
+          <label class="primary edit-btn file-btn">✂︎ Auto-edit a slow-mo swing video
+            <input id="editInput" type="file" accept="video/*" hidden />
+          </label>
+          <p class="hint">Trims the clip to your swing and pauses at address, top, impact and finish with your stats. Exports an MP4 you can share.</p>
           <p id="startMsg" class="start-msg" role="status"></p>
+        </div>
+      </section>
+
+      <section id="editor" class="editor hidden">
+        <div class="editor-inner">
+          <header class="editor-head">
+            <button id="edBack" class="pill-btn">← Back</button>
+            <h2>Swing clip</h2>
+          </header>
+
+          <div class="ed-preview">
+            <canvas id="edCanvas"></canvas>
+            <video id="edVideo" class="hidden" controls playsinline loop></video>
+          </div>
+
+          <div id="edOptions" class="settings">
+            <label>Slow-mo speed
+              <select id="edSlowmo">
+                <option value="auto">Auto-detect</option>
+                <option value="1">Normal speed</option>
+                <option value="2">2× (60 fps)</option>
+                <option value="4">4× (120 fps)</option>
+                <option value="8">8× (240 fps)</option>
+                <option value="16">16× (480 fps)</option>
+              </select>
+            </label>
+            <label>Pause at checkpoints
+              <select id="edHold">
+                <option value="1">1 s</option>
+                <option value="1.5">1.5 s</option>
+                <option value="2.5">2.5 s</option>
+                <option value="4">4 s</option>
+              </select>
+            </label>
+            <label>Swing playback
+              <select id="edSpeed">
+                <option value="1">As recorded</option>
+                <option value="0.5">2× slower</option>
+                <option value="0.25">4× slower</option>
+              </select>
+            </label>
+            <label>Skeleton while playing
+              <select id="edSkeleton">
+                <option value="true">Show</option>
+                <option value="false">Hide</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions"><button id="edGo" class="primary">Make clip</button></div>
+
+          <div id="edBall" class="ed-step hidden">
+            <p><b>Tap the ball</b> in the picture to add ball position and hands-vs-ball to the stats.</p>
+            <button id="edBallSkip" class="secondary">Skip</button>
+          </div>
+
+          <div id="edProgress" class="ed-progress hidden">
+            <div class="bar"><i id="edBar"></i></div>
+            <p id="edMsg"></p>
+          </div>
+
+          <div id="edResult" class="ed-result hidden">
+            <p id="edSummary" class="hint"></p>
+            <div class="actions">
+              <a id="edDownload" class="primary">Download MP4</a>
+              <button id="edShare" class="secondary">Share</button>
+            </div>
+            <div class="actions"><button id="edAgain" class="secondary">Change options &amp; redo</button></div>
+          </div>
+
+          <p id="edError" class="start-msg error"></p>
         </div>
       </section>
     </main>

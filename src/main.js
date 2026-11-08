@@ -5,6 +5,7 @@ import { CHECKPOINTS, evaluateAddress, evaluateSwing, lateralShiftInches, target
 import { drawOverlay } from './overlay.js';
 import { Coach } from './coach.js';
 import { loadSettings, saveSettings } from './settings.js';
+import { initEditor } from './editorUI.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -118,11 +119,13 @@ els.muteBtn.addEventListener('click', () => {
 // ------------------------------------------------------------------ starting / stopping
 
 async function ensureEngine() {
-  if (S.engine && S.engineModel === settings.model) return;
+  if (S.engine && S.engineModel === settings.model) return S.engine;
   S.engine?.close();
   setStartMsg('Loading pose model…');
   S.engine = await createPoseEngine({ model: settings.model });
   S.engineModel = settings.model;
+  setStartMsg('');
+  return S.engine;
 }
 
 async function startCamera() {
@@ -223,6 +226,21 @@ els.fileInput.addEventListener('change', () => {
   els.fileInput.value = '';
 });
 els.stopBtn.addEventListener('click', stop);
+
+const editor = initEditor({
+  ensureEngine,
+  settings,
+  saveSettings,
+  onClose: () => els.start.classList.remove('hidden'),
+});
+$('editInput').addEventListener('change', (e) => {
+  const f = e.target.files?.[0];
+  e.target.value = '';
+  if (!f) return;
+  coach.unlock();
+  els.start.classList.add('hidden');
+  editor.open(f);
+});
 els.flipBtn.addEventListener('click', async () => {
   settings.facing = settings.facing === 'user' ? 'environment' : 'user';
   els.facingSel.value = settings.facing;

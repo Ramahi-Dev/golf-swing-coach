@@ -7,6 +7,12 @@ export const DEFAULT_SETTINGS = {
   model: 'full', // 'lite' | 'full' | 'heavy'
   voice: true,
   ball: null, // { x, y } normalized 0..1 in the video frame
+  // Auto-edit (video clip) options
+  editSlowmo: 'auto', // 'auto' | '1' | '2' | '4' | '8' | '16'
+  editHold: '1.5', // seconds frozen at each checkpoint
+  editSpeed: '1', // playback speed of the moving parts
+  editSkeleton: 'true',
+  editBall: null, // per-video, not persisted meaningfully
 };
 
 export function loadSettings() {

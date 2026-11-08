@@ -95,7 +95,7 @@ export function drawOverlay(ctx, pose, { address = null, ball = null, scale = 1 
     ctx.strokeRect(p.x, p.y, box.w * scale, box.h * scale);
   }
 
-  const vis = (k) => pose.pts[k].v >= 0.3;
+  const vis = (k) => (pose.pts[k]?.v ?? 0) >= 0.3;
 
   // Limbs
   ctx.strokeStyle = C.limb;

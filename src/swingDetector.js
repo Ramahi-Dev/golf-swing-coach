@@ -182,6 +182,11 @@ export class SwingDetector {
     }
   }
 
+  /** End of input (e.g. the video ran out): close out a swing that is already in its follow-through. */
+  flush(t) {
+    if (this.state === 'follow' && this.lastPose) this._finish(this.lastPose, false, t);
+  }
+
   _finish(pose, held, t) {
     this.h.onCandidate?.('finish', pose);
     const rec = { address: this.address, top: this.top, impact: this.impact, finish: pose, held };
